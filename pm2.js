@@ -1,6 +1,6 @@
 module.exports = {
   apps: [{
-    name: 'RESRful API Server',
+    name: 'Kafka DelayJobs Server',
     script: './dist/app.js',
     watch: false, // 默认关闭watch 可替换为 ['src']
     ignore_watch: ['node_modules', 'build', 'logs'],

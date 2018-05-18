@@ -1,10 +1,10 @@
-import {ConsumerGroup as app} from './services/kafka'
-import mainRouter from './routes/main-routes'
-import errorRouter from './routes/error-routes'
+import { ConsumerGroup } from './services/kafka'
+import { mainRouter } from './routes/main-routes'
+import { errorRouter } from './routes/error-routes'
 
 // const env = process.env.NODE_ENV || 'development'
 
-app.on('error', errorRouter)
-app.on('message', mainRouter)
+ConsumerGroup.on('error', errorRouter)
+ConsumerGroup.on('message', mainRouter)
 
-export default app
+export default ConsumerGroup
