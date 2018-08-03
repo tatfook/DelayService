@@ -1,10 +1,16 @@
-import { ConsumerGroup } from './services/kafka'
-import { mainRouter } from './routes/main-routes'
-import { errorRouter } from './routes/error-routes'
+'use strict';
+
+const { ConsumerGroup } = require('./services/kafka');
+// const { mainRouter } = require('./routes/main-routes');
+// const { errorRouter } = require('./routes/error-routes');
 
 // const env = process.env.NODE_ENV || 'development'
 
-ConsumerGroup.on('error', errorRouter)
-ConsumerGroup.on('message', mainRouter)
+ConsumerGroup.on('error', err => {
+  console.log(err);
+});
+ConsumerGroup.on('message', message => {
+  console.log(message);
+});
 
-export default ConsumerGroup
+module.exports = ConsumerGroup;
