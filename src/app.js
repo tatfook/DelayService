@@ -1,5 +1,5 @@
 'use strict';
 
-const { run } = require('./services/kafka');
+const { run } = require('./service/kafka');
 
 run();
