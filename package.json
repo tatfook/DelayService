@@ -1,5 +1,5 @@
 {
-  "name": "DelayService",
+  "name": "delay-service",
   "version": "1.0.0",
   "description": "keepwork delayjobs service",
   "author": "Keepwork Team",
@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "async": "^2.6.1",
     "kafka-node": "^2.6.1",
     "mongoose": "^5.2.4",
     "require-directory": "^2.1.1"
