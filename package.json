@@ -10,6 +10,7 @@
     "production": "node dist/app.js"
   },
   "dependencies": {
+    "tracer": "^0.9.1",
     "axios": "^0.18.0",
     "async": "^2.6.1",
     "kafka-node": "^2.6.1",

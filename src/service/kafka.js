@@ -3,6 +3,7 @@
 const kafka = require('kafka-node');
 const config = require('../config');
 const LimitedQueue = require('../lib/concurrency');
+const logger = require('../lib/logger');
 const { route } = require('../router');
 
 const KafkaConfig = config.kafka;
@@ -22,11 +23,17 @@ q.drain = () => {
   }
 };
 
+q.error_handler = err => {
+  logger.error(err);
+};
+
 exports.run = () => {
   ConsumerGroup.on('error', err => {
-    console.log(err);
+    logger.error(err);
   });
+
   ConsumerGroup.on('message', msg => {
+    console.info(msg);
     try {
       if (q.tasks_amount > concurrency) {
         ConsumerGroup.pause();
@@ -34,7 +41,7 @@ exports.run = () => {
       }
       q.push(msg);
     } catch (err) {
-      console.error(err);
+      logger.error(err);
     }
   });
 };
