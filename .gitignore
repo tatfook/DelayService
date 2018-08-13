@@ -8,4 +8,4 @@ selenium-debug.log
 .idea/
 src/config.js
 logs/
-config.js
+yarn.lock
