@@ -54,7 +54,12 @@ class ESGateway {
     return client.delete(`/pages/${id}`);
   }
 
-  static move_page() {}
+  static move_page(file, project) {
+    return Promise.all([
+      this.remove_page(file.previous_path),
+      this.create_page(file, project),
+    ]);
+  }
 }
 
 module.exports = ESGateway;
