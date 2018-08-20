@@ -35,7 +35,7 @@ exports.run = () => {
   ConsumerGroup.on('message', msg => {
     console.info(msg);
     try {
-      if (q.tasks_amount > concurrency) {
+      if (q.tasks_amount > concurrency && !pause) {
         ConsumerGroup.pause();
         pause = !pause;
       }

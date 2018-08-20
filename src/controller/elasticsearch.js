@@ -57,3 +57,30 @@ exports.move_file = async msg => {
     logger.error(err);
   }
 };
+
+exports.update_site_visibility = async msg => {
+  try {
+    const params = msg.value;
+    await es_service.update_site_visibility(params.path, params.visibility);
+  } catch (err) {
+    logger.error(err);
+  }
+};
+
+exports.remove_site = async msg => {
+  try {
+    const params = msg.value;
+    await es_service.remove_site(params.path);
+  } catch (err) {
+    logger.error(err);
+  }
+};
+
+exports.remove_user = async msg => {
+  try {
+    const params = msg.value;
+    await es_service.remove_user(params.username);
+  } catch (err) {
+    logger.error(err);
+  }
+};
