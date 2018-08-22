@@ -2,6 +2,7 @@
 
 const model = require('../model/index');
 const es_service = require('../service/es-gateway');
+const keepwork_service = require('../service/keepwork');
 const logger = require('../lib/logger');
 
 const is_page = file => {
@@ -58,6 +59,18 @@ exports.move_file = async msg => {
   }
 };
 
+exports.create_site = async msg => {
+  try {
+    const params = msg.value;
+    const res = await keepwork_service.get_site_by_id(params.site_id);
+    const site = res.data;
+    site.username = params.username;
+    await es_service.create_site(site);
+  } catch (err) {
+    logger.error(err);
+  }
+};
+
 exports.update_site_visibility = async msg => {
   try {
     const params = msg.value;
@@ -71,6 +84,17 @@ exports.remove_site = async msg => {
   try {
     const params = msg.value;
     await es_service.remove_site(params.path);
+  } catch (err) {
+    logger.error(err);
+  }
+};
+
+exports.create_user = async msg => {
+  try {
+    const params = msg.value;
+    const res = await keepwork_service.get_user_by_id(params.user_id);
+    const user = res.data;
+    await es_service.create_user(user);
   } catch (err) {
     logger.error(err);
   }

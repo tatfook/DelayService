@@ -1,13 +1,15 @@
 'use strict';
 
 const Axios = require('axios');
-// const assert = require('assert');
 const config = require('../config');
 const ES_GATEWAY_CONFIG = config.es_gateway;
 const GIT_GATEWAY_CONFIG = config.git_gateway;
+const KEEPWORK_CONFIG = config.keepwork;
+
+const default_portrait = KEEPWORK_CONFIG.default_portrait;
 
 const client = Axios.create({
-  baseURL: `${ES_GATEWAY_CONFIG.url}/v0`,
+  baseURL: ES_GATEWAY_CONFIG.url,
   headers: { Authorization: ES_GATEWAY_CONFIG.admin_token },
   timeout: 30 * 1000,
 });
@@ -70,6 +72,21 @@ class ESGateway {
     return encodeURIComponent(url);
   }
 
+  static serialize_new_site(site) {
+    return {
+      username: site.username,
+      sitename: site.sitename,
+      displayName: site.displayName || site.sitename,
+      logoUrl: site.extra.logoUrl,
+      desc: site.description,
+    };
+  }
+
+  static create_site(site) {
+    const serilized_site = this.serialize_new_site(site);
+    return client.post('/sites', serilized_site);
+  }
+
   static update_site_visibility(path, visibility) {
     const id = this.get_site_id(path);
     return client.put(`/sites/${id}/visibility`, { visibility });
@@ -78,6 +95,22 @@ class ESGateway {
   static remove_site(path) {
     const id = this.get_site_id(path);
     return client.delete(`/sites/${id}`);
+  }
+
+  static serialize_new_user(user) {
+    user.portrait = user.portrait || default_portrait;
+    const serilized_user = {
+      username: user.username,
+      displayName: user.nickname || user.username,
+      portrait: `${KEEPWORK_CONFIG.base_url}${user.portrait}`,
+      location: user.location,
+    };
+    return serilized_user;
+  }
+
+  static create_user(user) {
+    const serilized_user = this.serialize_new_user(user);
+    return client.post('/users', serilized_user);
   }
 
   static remove_user(username) {
