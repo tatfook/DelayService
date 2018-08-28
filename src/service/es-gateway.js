@@ -17,7 +17,7 @@ const client = Axios.create({
 
 class ESGateway {
   static get_page_url(file) {
-    let url = `/${file.path}`;
+    let url = file.path;
     url = url.replace('.md', '');
     return url;
   }
@@ -64,7 +64,7 @@ class ESGateway {
   }
 
   static get_site_url(path) {
-    return `/${path}`;
+    return path;
   }
 
   static get_site_id(path) {
