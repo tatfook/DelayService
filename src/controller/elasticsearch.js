@@ -59,6 +59,28 @@ exports.move_file = async msg => {
   }
 };
 
+exports.remove_file = async msg => {
+  console.log(msg);
+  // try {
+  //   const params = msg.value;
+  //   if (is_page(params)) {
+  //     await es_service.remove_file(params.path);
+  //   }
+  // } catch (err) {
+  //   logger.error(err);
+  // }
+};
+
+exports.move_folder = async msg => {
+  console.log(msg);
+  // try {
+  //   const params = msg.value;
+  //   await es_service.remove_user(params.username);
+  // } catch (err) {
+  //   logger.error(err);
+  // }
+};
+
 exports.create_site = async msg => {
   try {
     const params = msg.value;

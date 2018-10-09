@@ -2,7 +2,7 @@
 
 const model = require('../model/index');
 const git_service = require('../service/git');
-const logger = require('../lib/logger');
+// const logger = require('../lib/logger');
 
 exports.submit = async msg => {
   try {
@@ -10,6 +10,7 @@ exports.submit = async msg => {
     await git_service.commit(commit.id, commit);
     await commit.remove();
   } catch (err) {
-    logger.error(err);
+    console.error(err.response.data);
+    throw err;
   }
 };
