@@ -1,23 +1,8 @@
 'use strict';
 
 const controllers = require('./controller/index');
-const logger = require('./lib/logger');
 const handlers_config = require('./config').handlers;
-const sleep = require('./lib/util').sleep;
-
-async function attempt(handler, msg, time = 0) {
-  time++;
-  await handler(msg)
-    .catch(async err => {
-      if (time >= 3) {
-        logger.error(err);
-        return;
-      }
-      await sleep(1000);
-      console.log('retry');
-      attempt(handler, msg, time);
-    });
-}
+const { attempt } = require('./lib/util');
 
 exports.route = msg => {
   try {
