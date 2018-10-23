@@ -16,7 +16,7 @@ const attempt = async (handler, params, time = 0) => {
         logger.error(err);
         return;
       }
-      await sleep(1000);
+      await sleep(10000);
       console.log('retry');
       attempt(handler, params, time);
     });
