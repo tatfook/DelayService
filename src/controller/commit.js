@@ -5,7 +5,9 @@ const git_service = require('../service/git');
 const { attempt } = require('../lib/util');
 
 const consume_one = async commit => {
-  await git_service.commit(commit.id, commit);
+  if (!commit) { return; }
+  await git_service.commit(commit.id, commit)
+    .catch(err => { if (err.response.status !== 404) { throw err; } });
   await commit.remove();
 };
 
