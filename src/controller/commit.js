@@ -2,12 +2,13 @@
 
 const model = require('../model/index');
 const git_service = require('../service/git');
+const { commit_error_handler } = require('../lib/error_handler');
 const { attempt } = require('../lib/util');
 
 const consume_one = async commit => {
   if (!commit) { return; }
   await git_service.commit(commit.id, commit)
-    .catch(err => { if (err.response.status !== 404) { throw err; } });
+    .catch(commit_error_handler.handle_error);
   await commit.remove();
 };
 
