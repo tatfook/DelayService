@@ -32,13 +32,13 @@ class LimitedQueue {
 
   wrap_worker() {
     return (tasks, next) => {
-      setImmediate(() => {
+      setImmediate(async () => {
         let task;
         while (tasks.length > 0) {
           try {
             task = this.shift(tasks);
-            this._worker(task);
-            this.after_each();
+            await this._worker(task);
+            await this.after_each();
           } catch (err) {
             this.handle_error(err);
           }
