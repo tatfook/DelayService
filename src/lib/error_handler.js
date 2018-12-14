@@ -14,6 +14,7 @@ const ignorable_error_messages = [
 
 class commit_error_handler {
   static handle_error(err) {
+    err.response = err.response || {};
     err.response.data = err.response.data || {};
     logger.error(err);
     if (ignorable_error_messages.includes(err.response.data.message)) { return; }
