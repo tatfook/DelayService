@@ -25,7 +25,7 @@ const submit = async msg => {
     const commit = await model.commit.findOne({ _id: msg.value });
     await consume_one(commit);
   } catch (err) {
-    console.error(err);
+    console.error(err.response.data);
     throw err;
   }
 };
